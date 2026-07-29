@@ -1,7 +1,8 @@
 # 🎓 MQPLUS — Ecossistema Educacional Inteligente
 
-[![Status](https://img.shields.io/badge/Status-Fase_de_Engenharia_de_Frontend_(Frontend)-blue.svg)]()
+[![Status](https://img.shields.io/badge/Status-Fase_de_Engenharia_de_Portal_Admin_(Admin)-blue.svg)]()
 [![Target](https://img.shields.io/badge/Foco-ENEM_|_Vestibulares_|_IFs_|_ETECs_|_Olimp%C3%ADadas-green.svg)]()
+[![Admin Portal](https://img.shields.io/badge/Portal_Admin-Next.js_14_|_RBAC_12_Perfis_|_CMS-purple.svg)](./ADMIN_PORTAL.md)
 [![Frontend Web](https://img.shields.io/badge/Frontend-Next.js_14_App_Router_|_React_|_Zustand-black.svg)](./FRONTEND.md)
 [![Backend API](https://img.shields.io/badge/Backend-NestJS_10_|_REST_API_|_Swagger-red.svg)](./BACKEND.md)
 [![Database](https://img.shields.io/badge/Database-PostgreSQL_16_|_Prisma_ORM-blue.svg)](./DATABASE.md)
@@ -21,6 +22,7 @@
 4. 🗄️ **[DATABASE.md](./DATABASE.md)** — Especificação da Arquitetura de Dados, Modelagem Conceitual/Lógica/Física, Dicionário de Dados, Prisma ORM, Índices e Otimização PostgreSQL 16.
 5. ⚡ **[BACKEND.md](./BACKEND.md)** — Especificação de Engenharia de Backend, NestJS, Clean Architecture, Autenticação JWT/RBAC, REST API, Swagger e Validações.
 6. 💻 **[FRONTEND.md](./FRONTEND.md)** — Especificação de Engenharia de Frontend Web, Next.js 14 App Router, Zustand, React Hook Form, Atomic Design e Acessibilidade.
+7. 🛡️ **[ADMIN_PORTAL.md](./ADMIN_PORTAL.md)** — Especificação do Portal Administrativo Corporativo, Matriz RBAC de 12 Perfis, Reusable DataTables, CMS Pedagógico e Dashboards Executivos.
 
 ---
 
@@ -30,7 +32,8 @@
 mqplus/
 ├── apps/
 │   ├── api/             # Backend NestJS REST API (Clean Arch / DDD) [@mqplus/api]
-│   └── web/             # Frontend Next.js 14 App Router [@mqplus/web]
+│   ├── web/             # Frontend Web Plataforma do Estudante [@mqplus/web]
+│   └── admin/           # Portal Administrativo Corporativo (RBAC) [@mqplus/admin]
 ├── packages/
 │   ├── ui/              # Design System React & Tailwind CSS [@mqplus/ui]
 │   ├── core/            # Primitivos de Domínio DDD & Regras Puras [@mqplus/core]
@@ -74,10 +77,8 @@ pnpm --filter @mqplus/database db:push
 pnpm dev
 ```
 
-- **Frontend Web:** [http://localhost:3000](http://localhost:3000)
-- **Login:** [http://localhost:3000/login](http://localhost:3000/login)
-- **Dashboard:** [http://localhost:3000/dashboard](http://localhost:3000/dashboard)
-- **Resolução de Questões:** [http://localhost:3000/questions](http://localhost:3000/questions)
+- **Plataforma do Estudante (Web):** [http://localhost:3000](http://localhost:3000)
+- **Portal Administrativo (Admin):** [http://localhost:3001](http://localhost:3001)
 - **Backend API REST:** [http://localhost:4000/api/v1](http://localhost:4000/api/v1)
 - **Documentação Interactive Swagger:** [http://localhost:4000/api/docs](http://localhost:4000/api/docs)
 
