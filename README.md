@@ -1,7 +1,8 @@
 # 🎓 MQPLUS — Ecossistema Educacional Inteligente
 
-[![Status](https://img.shields.io/badge/Status-Fase_de_Engenharia_de_Backend_(Backend)-blue.svg)]()
+[![Status](https://img.shields.io/badge/Status-Fase_de_Engenharia_de_Frontend_(Frontend)-blue.svg)]()
 [![Target](https://img.shields.io/badge/Foco-ENEM_|_Vestibulares_|_IFs_|_ETECs_|_Olimp%C3%ADadas-green.svg)]()
+[![Frontend Web](https://img.shields.io/badge/Frontend-Next.js_14_App_Router_|_React_|_Zustand-black.svg)](./FRONTEND.md)
 [![Backend API](https://img.shields.io/badge/Backend-NestJS_10_|_REST_API_|_Swagger-red.svg)](./BACKEND.md)
 [![Database](https://img.shields.io/badge/Database-PostgreSQL_16_|_Prisma_ORM-blue.svg)](./DATABASE.md)
 [![Architecture](https://img.shields.io/badge/Arquitetura-Mon%C3%B3lito_Modular_|_DDD_|_Clean_Arch-purple.svg)](./ARCHITECTURE.md)
@@ -19,6 +20,7 @@
 3. 🏗️ **[ARCHITECTURE.md](./ARCHITECTURE.md)** — Arquitetura Técnica Corporativa, DDD, Monólito Modular, Diagramas C4 Model, ADRs, Segurança, Cache Redis e Convenções.
 4. 🗄️ **[DATABASE.md](./DATABASE.md)** — Especificação da Arquitetura de Dados, Modelagem Conceitual/Lógica/Física, Dicionário de Dados, Prisma ORM, Índices e Otimização PostgreSQL 16.
 5. ⚡ **[BACKEND.md](./BACKEND.md)** — Especificação de Engenharia de Backend, NestJS, Clean Architecture, Autenticação JWT/RBAC, REST API, Swagger e Validações.
+6. 💻 **[FRONTEND.md](./FRONTEND.md)** — Especificação de Engenharia de Frontend Web, Next.js 14 App Router, Zustand, React Hook Form, Atomic Design e Acessibilidade.
 
 ---
 
@@ -73,6 +75,9 @@ pnpm dev
 ```
 
 - **Frontend Web:** [http://localhost:3000](http://localhost:3000)
+- **Login:** [http://localhost:3000/login](http://localhost:3000/login)
+- **Dashboard:** [http://localhost:3000/dashboard](http://localhost:3000/dashboard)
+- **Resolução de Questões:** [http://localhost:3000/questions](http://localhost:3000/questions)
 - **Backend API REST:** [http://localhost:4000/api/v1](http://localhost:4000/api/v1)
 - **Documentação Interactive Swagger:** [http://localhost:4000/api/docs](http://localhost:4000/api/docs)
 
