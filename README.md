@@ -1,7 +1,8 @@
 # 🎓 MQPLUS — Ecossistema Educacional Inteligente
 
-[![Status](https://img.shields.io/badge/Status-Fase_de_Arquitetura_de_Banco_de_Dados_(Database)-blue.svg)]()
+[![Status](https://img.shields.io/badge/Status-Fase_de_Engenharia_de_Backend_(Backend)-blue.svg)]()
 [![Target](https://img.shields.io/badge/Foco-ENEM_|_Vestibulares_|_IFs_|_ETECs_|_Olimp%C3%ADadas-green.svg)]()
+[![Backend API](https://img.shields.io/badge/Backend-NestJS_10_|_REST_API_|_Swagger-red.svg)](./BACKEND.md)
 [![Database](https://img.shields.io/badge/Database-PostgreSQL_16_|_Prisma_ORM-blue.svg)](./DATABASE.md)
 [![Architecture](https://img.shields.io/badge/Arquitetura-Mon%C3%B3lito_Modular_|_DDD_|_Clean_Arch-purple.svg)](./ARCHITECTURE.md)
 [![Design System](https://img.shields.io/badge/Design_System-@mqplus/ui_v1.0-indigo.svg)](./DESIGN_SYSTEM.md)
@@ -17,6 +18,7 @@
 2. 🎨 **[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)** — Identidade Visual, Paleta de Cores, Design Tokens, Acessibilidade (WCAG 2.2 AA) e Especificação de Componentes.
 3. 🏗️ **[ARCHITECTURE.md](./ARCHITECTURE.md)** — Arquitetura Técnica Corporativa, DDD, Monólito Modular, Diagramas C4 Model, ADRs, Segurança, Cache Redis e Convenções.
 4. 🗄️ **[DATABASE.md](./DATABASE.md)** — Especificação da Arquitetura de Dados, Modelagem Conceitual/Lógica/Física, Dicionário de Dados, Prisma ORM, Índices e Otimização PostgreSQL 16.
+5. ⚡ **[BACKEND.md](./BACKEND.md)** — Especificação de Engenharia de Backend, NestJS, Clean Architecture, Autenticação JWT/RBAC, REST API, Swagger e Validações.
 
 ---
 
@@ -72,7 +74,7 @@ pnpm dev
 
 - **Frontend Web:** [http://localhost:3000](http://localhost:3000)
 - **Backend API REST:** [http://localhost:4000/api/v1](http://localhost:4000/api/v1)
-- **Documentação Swagger:** [http://localhost:4000/api/docs](http://localhost:4000/api/docs)
+- **Documentação Interactive Swagger:** [http://localhost:4000/api/docs](http://localhost:4000/api/docs)
 
 ---
 
