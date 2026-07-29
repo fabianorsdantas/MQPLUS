@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 
 type ThemeMode = 'dark' | 'light' | 'system';
