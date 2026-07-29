@@ -1,0 +1,236 @@
+// Prisma Schema Oficial do MQPLUS
+// Compatível com PostgreSQL 16 e Prisma Client
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
+  PEDAGOGICAL_COORDINATOR
+  MENTOR
+  PSYCHOLOGIST
+  CONTENT_CREATOR
+  REVIEWER
+  ADMIN
+}
+
+enum KnowledgeArea {
+  HUMAN_SCIENCES
+  NATURAL_SCIENCES
+  MATHEMATICS
+  LANGUAGES_AND_CODES
+}
+
+enum QuestionDifficulty {
+  VERY_EASY
+  EASY
+  MEDIUM
+  HARD
+  VERY_HARD
+}
+
+enum TargetExam {
+  ENEM
+  VESTIBULAR_TRADICIONAL
+  INSTITUTO_FEDERAL
+  ESCOLA_TECNICA
+  OLIMPIADA_CIENTIFICA
+  CONCURSO_NIVEL_MEDIO
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String     @map("password_hash")
+  fullName     String     @map("full_name")
+  role         UserRole   @default(STUDENT)
+  cpf          String?    @unique
+  phone        String?
+  birthDate    DateTime?  @map("birth_date")
+  isActive     Boolean    @default(true) @map("is_active")
+
+  profile           UserProfile?
+  questionAnswers   QuestionAnswer[]
+  simulationAttempts SimulationAttempt[]
+  flashcards        Flashcard[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+model UserProfile {
+  id               String     @id @default(cuid())
+  userId           String     @unique @map("user_id")
+  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  targetExam       TargetExam @default(ENEM) @map("target_exam")
+  targetCourse     String?    @map("target_course")
+  dailyGoalMinutes Int        @default(60) @map("daily_goal_minutes")
+  streakCount      Int        @default(0) @map("streak_count")
+  highestStreak    Int        @default(0) @map("highest_streak")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("user_profiles")
+}
+
+model Discipline {
+  id       String        @id @default(cuid())
+  name     String        @unique
+  code     String        @unique
+  area     KnowledgeArea
+  subjects Subject[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("disciplines")
+}
+
+model Subject {
+  id           String     @id @default(cuid())
+  disciplineId String     @map("discipline_id")
+  discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Cascade)
+  name         String
+
+  parentSubjectId String?   @map("parent_subject_id")
+  parentSubject   Subject?  @relation("SubjectHierarchy", fields: [parentSubjectId], references: [id])
+  childSubjects  Subject[] @relation("SubjectHierarchy")
+
+  questions  Question[]
+  flashcards Flashcard[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("subjects")
+}
+
+model Question {
+  id          String             @id @default(cuid())
+  subjectId   String             @map("subject_id")
+  subject     Subject            @relation(fields: [subjectId], references: [id])
+  statement   String             @db.Text
+  explanation String?            @db.Text
+  difficulty  QuestionDifficulty @default(MEDIUM)
+  
+  // Parâmetros Logísticos da Teoria de Resposta ao Item (TRI)
+  triA Float @default(1.0) @map("tri_a") // Discriminação
+  triB Float @default(0.0) @map("tri_b") // Dificuldade
+  triC Float @default(0.2) @map("tri_c") // Acerto ao Acaso
+
+  examYear    Int    @map("exam_year")
+  institution String
+
+  options Option[]
+  answers QuestionAnswer[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([subjectId])
+  @@index([difficulty])
+  @@index([examYear, institution])
+  @@map("questions")
+}
+
+model Option {
+  id         String   @id @default(cuid())
+  questionId String   @map("question_id")
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  letter     String   // A, B, C, D, E
+  content    String   @db.Text
+  isCorrect  Boolean  @default(false) @map("is_correct")
+
+  answers QuestionAnswer[]
+
+  @@unique([questionId, letter])
+  @@map("options")
+}
+
+model QuestionAnswer {
+  id               String   @id @default(cuid())
+  userId           String   @map("user_id")
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId       String   @map("question_id")
+  question         Question @relation(fields: [questionId], references: [id])
+  selectedOptionId String   @map("selected_option_id")
+  selectedOption   Option   @relation(fields: [selectedOptionId], references: [id])
+  isCorrect        Boolean  @map("is_correct")
+  responseTimeSec  Int      @map("response_time_sec")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, questionId])
+  @@index([createdAt])
+  @@map("question_answers")
+}
+
+model Simulation {
+  id              String      @id @default(cuid())
+  title           String
+  examType        TargetExam  @map("exam_type")
+  totalQuestions  Int         @map("total_questions")
+  durationMinutes Int         @map("duration_minutes")
+  isPublished     Boolean     @default(false) @map("is_published")
+
+  attempts SimulationAttempt[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("simulations")
+}
+
+model SimulationAttempt {
+  id           String     @id @default(cuid())
+  simulationId String     @map("simulation_id")
+  simulation   Simulation @relation(fields: [simulationId], references: [id])
+  userId       String     @map("user_id")
+  user         User       @relation(fields: [userId], references: [id])
+
+  scoreTRI     Float? @map("score_tri") // Nota estimativa TRI (200-1000)
+  correctCount Int    @default(0) @map("correct_count")
+
+  startedAt  DateTime  @default(now()) @map("started_at")
+  finishedAt DateTime? @map("finished_at")
+
+  @@index([userId, simulationId])
+  @@map("simulation_attempts")
+}
+
+model Flashcard {
+  id        String  @id @default(cuid())
+  userId    String  @map("user_id")
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subjectId String  @map("subject_id")
+  subject   Subject @relation(fields: [subjectId], references: [id])
+
+  front String @db.Text
+  back  String @db.Text
+
+  // Algoritmo de Repetição Espaçada SM-2 (SRS)
+  repetitionCount Int      @default(0) @map("repetition_count")
+  intervalDays    Int      @default(1) @map("interval_days")
+  easeFactor      Float    @default(2.5) @map("ease_factor")
+  nextReviewAt    DateTime @default(now()) @map("next_review_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId, nextReviewAt])
+  @@map("flashcards")
+}
